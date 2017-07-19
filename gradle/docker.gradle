@@ -1,0 +1,18 @@
+/**
+ * Prepare files required to build the Docker image
+ */
+task prepareDocker() {
+  doLast {
+    copy {
+      from 'docker'
+      from "${buildDir}/libs/${project.name}-${project.version}-all.jar"
+      into "$buildDir/docker"
+
+      rename { String filename ->
+        if (filename ==~ /.*-all\.jar/) {
+          "${project.name}.jar"
+        }
+      }
+    }
+  }
+}
